@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { createContext, useState } from "react";
 import YouTube from "react-youtube";
 import Modal from "react-modal";
+Modal.setAppElement("#root");
 const opts = {
     height: "390",
     width: "640",
@@ -46,33 +47,35 @@ const MovieProvider = ({ children }) => {
     return (
         <MovieContext.Provider value={{ handleTrailer }}>
             {children}
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={() => setModalIsOpen(false)}
-                style={{
-                    overlay: {
-                        position: "fixed",
-                        zIndex: 9999,
-                    },
-                    content: {
-                        top: "50%",
-                        left: "50%",
-                        right: "auto",
-                        bottom: "auto",
-                        marginRight: "-50%",
-                        transform: "translate(-50%, -50%)",
-                    },
-                }}
-                contentLabel="Example Modal"
-            >
-                {trailerKey ? (
-                    <YouTube videoId={trailerKey} opts={opts} />
-                ) : (
-                    <div className="text-center text-black text-md p-3">
-                        {errorMsg}
-                    </div>
-                )}
-            </Modal>
+            {typeof window !== "undefined" && (
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={() => setModalIsOpen(false)}
+                    style={{
+                        overlay: {
+                            position: "fixed",
+                            zIndex: 9999,
+                        },
+                        content: {
+                            top: "50%",
+                            left: "50%",
+                            right: "auto",
+                            bottom: "auto",
+                            marginRight: "-50%",
+                            transform: "translate(-50%, -50%)",
+                        },
+                    }}
+                    contentLabel="Example Modal"
+                >
+                    {trailerKey ? (
+                        <YouTube videoId={trailerKey} opts={opts} />
+                    ) : (
+                        <div className="text-center text-black text-md p-3">
+                            {errorMsg}
+                        </div>
+                    )}
+                </Modal>
+            )}
         </MovieContext.Provider>
     );
 };
