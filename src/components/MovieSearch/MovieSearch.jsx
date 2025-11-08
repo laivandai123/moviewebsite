@@ -1,38 +1,13 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import { MovieContext } from "../MovieContext/MovieProvider";
 
-const responsive = {
-    superLargeDesktop: {
-        breakpoint: { max: 4000, min: 3000 },
-        items: 10,
-    },
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 7,
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 3,
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 2,
-    },
-};
-
-const MovieList = ({ title, data }) => {
+const MovieSearch = ({ title, data }) => {
     const { handleTrailer } = useContext(MovieContext);
-
     return (
         <div className="text-white p-10 mb-10">
             <h2 className="uppercase text-2xl mb-5">{title}</h2>
-            <Carousel
-                responsive={responsive}
-                className="flex items-center space-x-4 "
-            >
+            <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {data &&
                     data.length > 0 &&
                     data.map((item) => (
@@ -41,7 +16,7 @@ const MovieList = ({ title, data }) => {
                             className="w-[200px] h-[300px] relative group cursor-pointer"
                             onClick={() => handleTrailer(item.id)}
                         >
-                            <div className="w-full h-full group-hover:scale-105 transition-transform duration-500 ease-in-out">
+                            <div className=" w-full h-full group-hover:scale-105 transition-transform duration-500 ease-in-out">
                                 <div className="absolute w-full h-full top-0 left-0 bg-black/40 "></div>
                                 <img
                                     src={`${import.meta.env.VITE_IMG_URL}${
@@ -58,12 +33,14 @@ const MovieList = ({ title, data }) => {
                             </div>
                         </div>
                     ))}
-            </Carousel>
+            </div>
         </div>
     );
 };
-MovieList.propTypes = {
+
+MovieSearch.propTypes = {
     title: PropTypes.string,
     data: PropTypes.array,
 };
-export default MovieList;
+
+export default MovieSearch;

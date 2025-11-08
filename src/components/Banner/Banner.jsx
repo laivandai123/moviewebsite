@@ -7,10 +7,10 @@ const Banner = () => {
             <div className="absolute w-full h-full bg-black opacity-30"></div>
             <div className="w-full h-full flex items-center justify-center space-x-[60px]  p-4 relative z-20">
                 <div className="flex flex-col flex-1 space-y-5 p-6">
-                    <p className="py-2 px-5 text-white bg-gradient-to-r from-orange-800 to-white w-[120px]">
+                    <p className="py-1 px-4 text-white text-[14px] bg-gradient-to-r from-orange-800 to-white w-[100px]">
                         TV Show
                     </p>
-                    <h1 className="text-[40px] font-bold text-white">
+                    <h1 className="lg:text-[40px] text-[28px] font-bold text-white">
                         Tru tiên thanh vân chí
                     </h1>
                     <div className="flex items-center space-x-3">
@@ -32,22 +32,22 @@ const Banner = () => {
                         Dịch Phong, Triệu Lệ Dĩnh, Dương Tử, Thành Nghị, Thư
                         Sướng, Tần Tuấn Kiệt và một số diễn viên khác.
                     </p>
-                    <div className="flex gap-5 mt-6">
+                    <div className="flex gap-5 mt-6 ">
                         <a
                             href=""
-                            className="text-white py-2 px-6  bg-gray-700"
+                            className="text-white py-2 px-4 text-[14px] rounded-[5px] bg-gray-700"
                         >
                             Chi tiết
                         </a>
                         <a
                             href=""
-                            className="text-white py-2 px-6  bg-red-700 hover:opacity-90"
+                            className="text-white py-2 px-4 text-[14px] rounded-[5px] bg-red-700 hover:opacity-90"
                         >
                             Xem phim
                         </a>
                     </div>
                 </div>
-                <div className="flex-1 flex justify-center items-center relative group cursor-pointer overflow-hidden rounded-lg">
+                <div className="flex-1 hidden md:flex justify-center items-center relative group cursor-pointer overflow-hidden rounded-lg">
                     <img
                         src=".././banner.jpg"
                         alt="banner"

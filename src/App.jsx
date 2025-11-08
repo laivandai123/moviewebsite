@@ -2,9 +2,31 @@ import { useEffect, useState } from "react";
 import Banner from "./components/Banner/Banner";
 import Header from "./components/Header/Header";
 import MovieList from "./components/MovieList/MovieList";
+import MovieSearch from "./components/MovieSearch/MovieSearch";
+import { MovieProvider } from "./components/MovieContext/MovieProvider";
 function App() {
-    const [movie, setMovie] = useState();
-    const [movieRate, setMovieRate] = useState();
+    const [movie, setMovie] = useState([]);
+    const [movieRate, setMovieRate] = useState([]);
+    const [movieSearch, setMovieSearch] = useState([]);
+    const handleSearch = async (searchVal) => {
+        setMovieSearch([]);
+        try {
+            const url = `https://api.themoviedb.org/3/search/movie?query=${searchVal}&include_adult=false&language=vi&page=1`;
+            const options = {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+                },
+            };
+            const searchMovie = await fetch(url, options);
+            const data = await searchMovie.json();
+            console.log(data);
+            setMovieSearch(data.results);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     useEffect(() => {
         const fetchMovie = async () => {
             const options = {
@@ -32,13 +54,24 @@ function App() {
     }, []);
     return (
         <>
-            <div className="bg-black pb-10">
-                <Header />
-                <Banner />
-                <MovieList title="Phim Hot" data={movie} />
+            <MovieProvider>
+                <div className="bg-black pb-10">
+                    <Header onSearch={handleSearch} />
+                    <Banner />
+                    {movieSearch.length > 0 ? (
+                        <MovieSearch
+                            title={"Kết quả tìm kiếm"}
+                            data={movieSearch}
+                        />
+                    ) : (
+                        <>
+                            <MovieList title="Phim Hot" data={movie} />
 
-                <MovieList title={"Phim Đề Cử"} data={movieRate} />
-            </div>
+                            <MovieList title={"Phim Đề Cử"} data={movieRate} />
+                        </>
+                    )}
+                </div>
+            </MovieProvider>
         </>
     );
 }
